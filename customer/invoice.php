@@ -7,28 +7,33 @@ $name="";
 $num="";
 $th="";
 $dt="";
+$gen="";
 while($row2 = mysqli_fetch_assoc($result2)) 
 {
         $name=$row2['ename'];
         $num=$row2['phone'];
         $th=$row2['therapy'];
         $dt=$row2['dt'];
+        $gen=$row2['gender'];
 }
 
 $ser=explode(",", $th);
 
-$sdetail=array();
-$sprice=array();
+#$sdetail=array();
+#$sprice=array();
 $sql11 = "SELECT * from services";
 $result11 = mysqli_query($conn, $sql11);
 while($row11 = mysqli_fetch_assoc($result11)) {
         $dm0=$row11['price'];
         $dm1=$row11['service_name'];
-        array_push($sdetail, $dm1);
-        array_push($sprice, $dm0);
+        $sdetail[$row11['id']]=$dm1;
+        $sprice[$row11['id']]=$dm0;
+        #array_push($sdetail, $dm1);
+        #$array_push($sprice, $dm0);
      }
 
-
+#print_r($sprice[$sprice]);
+#print_r($ser);
 ?>
 <!doctype html>
 <html>
@@ -211,17 +216,17 @@ while($row11 = mysqli_fetch_assoc($result11)) {
 
             <tr class="item last">
                 <td>
-                    <?php echo $sdetail[$key-1];?>
+                    <?php echo $sdetail[$key];?>
                 </td>
                 
                 <td>
-                    <?php echo $sprice[$key-1];?>
+                    <?php echo $sprice[$key];?>
                 </td>
             </tr>
 
 
 <?php 
-$sub += $sprice[$key-1];
+$sub += $sprice[$key];
 } 
 $dd=($sub * $d)/100;
 $fprice=$sub-$dd;
@@ -255,8 +260,14 @@ $fprice=$sub-$dd;
         </table>
     </div>
 <?php
-$qq1="insert into records(ename,phone,therapy,price,discount,dt) values ('".$name."','".$num."','".$th."','".$sub."','".$d."','".$dt."')";
+if($num='')
+{
+$num=0;
+}
+$qq1="insert into records(ename,phone,therapy,price,discount,dt,gender) values ('".$name."','".$num."','".$th."','".$sub."','".$d."','".$dt."','".$gen."')";
+#echo $qq1;
 mysqli_query($conn, $qq1);
+echo mysqli_error($conn);
 $qq2="delete from active where id=".$id;
 mysqli_query($conn, $qq2);
 ?>

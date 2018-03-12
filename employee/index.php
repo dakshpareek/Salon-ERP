@@ -166,8 +166,11 @@ var wc_add_to_cart_params = {"ajax_url":"\/beautyspot\/wp-admin\/admin-ajax.php"
 							<li id="menu-item-152" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="../services/">Services</a></span></li>
 							<li id="menu-item-153" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-120 current_page_item"><span><a href="index.php">Employees</a></span></li>
 							<li id="menu-item-153" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="../Attendance/">Employees Attendance</a></span></li>
+							<li id="menu-item-165" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="../salary/">Employee Salary</a></span></li>
+							
 							<li id="menu-item-165" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="../customer/">Customer Status</a></span></li>
 							<li id="menu-item-165" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="../records/">Records</a></span></li>
+							<li id="menu-item-165" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="../stock/">Stock</a></span></li>
 
 						</ul>
 					</nav>
@@ -328,6 +331,7 @@ xmlhttp.onreadystatechange = function() {
         document.getElementById("uemail").value = myObj.email;
         document.getElementById("uphone").value = myObj.phone;
         document.getElementById("uaddress").value = myObj.address;
+        document.getElementById("usalary").value = myObj.salary;
         document.getElementById("blah1").src=myObj.image;
         //document.cookie = "exp ="+myObj.expertise;
         document.getElementById('uid').value=myObj.id;
@@ -576,6 +580,12 @@ echo "<option value='".$row2['master_cat']."'>".$row2['master_cat']."</option>";
 <img id="blah" src="#" alt=""/>
 </div>
 </div>
+<div class="row">
+<div class="col-sm-6">
+	<label for="res-reservation-note">Salary</label>
+<input type="text" name="salary">
+</div>
+</div>
 <div class="form-field"><label for="res-reservation-note">Address</label><span class="wpcf7-form-control-wrap res-reservation-note"><textarea name="address" cols="40" rows="10" class="wpcf7-form-control wpcf7-textarea" ></textarea></span></div>
 <div class="form-field"><input type="button" onclick="submit_by_id()" value="Register" class="wpcf7-form-control wpcf7-submit c-button"></div>
 </div>
@@ -619,6 +629,13 @@ echo "<option value='".$row2['master_cat']."'>".$row2['master_cat']."</option>";
 <div class="form-field"><label for="res-your-phone">Phone Number</label><span class="wpcf7-form-control-wrap res-your-phone"><input type="text" name="uphone" value="" class="wpcf7-form-control wpcf7-text wpcf7-tel wpcf7-validates-as-tel" 
 	id="uphone" ></span></div>
 	<div class="form-field"><label for="res-reservation-note">Address</label><span class="wpcf7-form-control-wrap res-reservation-note"><textarea name="uaddress" cols="40" rows="10" class="wpcf7-form-control wpcf7-textarea" id="uaddress"></textarea></span></div>
+</div>
+
+<div class="row">
+<div class="col-sm-6">
+<label for="res-your-name">Salary</label>
+<input type="text" id="usalary" name="usalary">
+</div>
 </div>
 
 <div class="col-sm-6">

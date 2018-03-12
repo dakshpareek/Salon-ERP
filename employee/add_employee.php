@@ -8,6 +8,7 @@ $phone= mysqli_real_escape_string($conn,$_POST['phone']);
 $address= mysqli_real_escape_string($conn,$_POST['address']);
 #$del= mysqli_real_escape_string($conn,$_POST['del']);
 $des= mysqli_real_escape_string($conn,$_POST['des']);
+$sal=mysqli_real_escape_string($conn,$_POST['salary']);
 
 
 
@@ -29,10 +30,11 @@ $target_file = $target_dir . basename($_FILES["file"]["name"]);
 
 if( in_array($imageFileType,$extensions_arr) ){
  
-  $insert = $conn->query("INSERT into employee (ename,email,phone,address,image,experties,status) VALUES ('$ename','$email','$phone','$address','$name','$final','$des')");
+  $insert = $conn->query("INSERT into employee (ename,email,phone,address,image,experties,status,salary,rsalary) VALUES ('$ename','$email','$phone','$address','$name','$final','$des','$sal','$sal')");
         if($insert){
             echo "<script>alert('Employee Added');location.href='index.php';</script>";
         }else{
+          mysqli_error($conn);
             echo "Failed, please try again.";
         } 
 
@@ -45,11 +47,13 @@ if( in_array($imageFileType,$extensions_arr) ){
 else
 {
 	$name=NULL;
- 
-  $insert = $conn->query("INSERT into employee (ename,email,phone,address,image,experties,status) VALUES ('$ename','$email','$phone','$address','$name','$final','$des')");
+ $qq="INSERT into employee (ename,email,phone,address,image,experties,status,salary,rsalary) VALUES ('$ename','$email','$phone','$address','$name','$final','$des','$sal','$sal')";
+  $insert = $conn->query($qq);
         if($insert){
             echo "<script>alert('Employee Added');location.href='index.php';</script>";
         }else{
+          echo $qq;
+echo "Here";
             echo "Failed, please try again.";
         } 
 }

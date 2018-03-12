@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 include('../database/connection.php');
 session_start();
 if(!isset($_SESSION['login'])){
@@ -6,225 +6,54 @@ echo "<script>
 alert('You Are Not Authorised');
 location.href='../home.html'</script>";
 }
-$sql00 = "SELECT * from active";
-$result00 = mysqli_query($conn, $sql00);
-
-
-
-$sprice="";
-#$sdetail=array();
-$a = "";
-$sql11 = "SELECT * from services";
-$result11 = mysqli_query($conn, $sql11);
-while($row11 = mysqli_fetch_assoc($result11)) {
- 		$st1="<option value='".$row11['service_name']."'>".$row11['service_name']."</option>";
- 		$dm0=$row11['price'].",";
- 		$sprice[$row11['id']]= $dm0;
- 		$dm1=$row11['service_name'];
- 		$sdetail[$row11['id']]=$dm1;
- 		$sduration[$row11['id']]=$row11['duration'];
-
- 		#array_push($sdetail, $dm1);
-		$a .= $st1;
-	 }
-
-$a1 = "";
-$sql1 = "SELECT * from employee";
-$result1 = mysqli_query($conn, $sql1);
-while($row1 = mysqli_fetch_assoc($result1)) {
- 		$st1="<option value='".$row1['ename']."'>".$row1['ename']."  (".$row1['experties'].")</option>";
-		$a1 .= $st1;
-	 }
-		
-
-$a1a = "";
-$sql1a = "SELECT DISTINCT master_cat from services";
-$result1a = mysqli_query($conn, $sql1a);
-while($row1a = mysqli_fetch_assoc($result1a)) {
- 		$st1="<option value='".$row1a['master_cat']."'>".$row1a['master_cat']."</option>";
-		$a1a .= $st1;
-	 }						
 
 ?>
 <!DOCTYPE html>
 <html lang="en-US">
-<!-- Copied from http://wpdemos.lsvr.sk/beautyspot/typography/ by Cyotek WebCopy 1.3.0.405, Thursday, January 25, 2018, 7:53:05 AM -->
 
-<head data-template-uri="http://wpdemos.lsvr.sk/beautyspot/wp-content/themes/beautyspot">
+
+<head>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
-	<link rel="shortcut icon" href="../wp-content/uploads/sites/2/2017/01/favicon.png">
-    <title>Book Appointment</title>
+    <title>Stock  Record</title>
 <link rel='dns-prefetch' href='//fonts.googleapis.com'>
-<script type="text/javascript">
-	function submit_by_id()
-	{
-
-		document.getElementById("add_therapy").submit();
-	}
-</script>
 <link rel='dns-prefetch' href='//s.w.org'>
 		<script type="text/javascript">
 			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/wpdemos.lsvr.sk\/beautyspot\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.8.5"}};
 			!function(a,b,c){function d(a){var b,c,d,e,f=String.fromCharCode;if(!k||!k.fillText)return!1;switch(k.clearRect(0,0,j.width,j.height),k.textBaseline="top",k.font="600 32px Arial",a){case"flag":return k.fillText(f(55356,56826,55356,56819),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,56826,8203,55356,56819),0,0),c=j.toDataURL(),b!==c&&(k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447),0,0),c=j.toDataURL(),b!==c);case"emoji4":return k.fillText(f(55358,56794,8205,9794,65039),0,0),d=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55358,56794,8203,9794,65039),0,0),e=j.toDataURL(),d!==e}return!1}function e(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i,j=b.createElement("canvas"),k=j.getContext&&j.getContext("2d");for(i=Array("flag","emoji4"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
 		</script>
 
-		<script type="text/javascript">
-
-			
-			function num_service()
-			{
-				ppp=0;
-				//document.getElementById('price').innerHTML="";
-				var num_service = document.getElementById("_num_service").value;
-				jQuery('#_service div').html('');
-				i=1;
-				for(i=1;i<=num_service;i++)
-				{
-					var div = document.createElement('div');
-					var s_no = 's'+i;
-					var c_no ='c'+i;
-					var e_no = 'e'+i;
-					var m_no = 'm'+i;
-					div.className =s_no;
-					
-					datastr="<?php echo $a;?>";
-					datastr2="<?php echo $a1;?>";
-					datastr010="<?php echo $a1a;?>";
-					
-					div.innerHTML =
-        			'</br><h5 class="form-field-title">Choose Main Service Category '+ i +'</h5><select onchange="get_mainservice('+i+')" id="'+m_no+'" name="'+m_no+'"">\
-        			<option value="Select">Select</option>\
-        			'+datastr010+'\
-        			</select>\
-        			</br><h5 class="form-field-title">Choose Sub Category '+ i +'</h5><select onchange="get_service('+i+')" id="'+c_no+'" name="'+c_no+'">\
-        			'+c_no+'\
-        			</select>\
-        			</br><h5 class="form-field-title">Choose Service '+ i +'</h5><select id="'+s_no+'" name="'+s_no+'" onchange="cal_price('+i+')">\
-        			<option value="Select">Select</option>\
-					</select>\
-					</br><h5 class="form-field-title">Therapist Avialable For Service '+ i +'</h5>\
-					<select id="'+e_no+'" name="'+e_no+'">\
-					'+datastr2+'\
-  					</select>\
-  					\
-  					<hr>\
-					';
-					document.getElementById('_service').appendChild(div);
-				}
-    			
-
-
-    			
-
-    		
-			}
-
-//getting all master_categories
-			function get_mainservice(id)
-			{
-			var idd='m'+id;
-			var cid='c'+id;
-			var cat = document.getElementById(idd).value;
-			
-
-var xmlhttp = new XMLHttpRequest();
+<script type="text/javascript">
+function get_record(id)
+{
+	dt=document.getElementById(id).value;
+	var xmlhttp = new XMLHttpRequest();
 
 xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
 
 		myObj = this.responseText;
-		document.getElementById(cid).innerHTML=myObj;
+var table = document.getElementById("rec");
+
+		for(var i = table.rows.length - 1; i > 0; i--)
+		{
+    		table.deleteRow(i);
+		}
+		document.getElementById('rec').innerHTML += myObj;
+		//document.getElementById('rec').innerHTML=myObj;
 
 }
     };
-xmlhttp.open("GET", "get_master_service.php?id="+cat, true);
+xmlhttp.open("GET", "get_records.php?dt="+dt,true);
 xmlhttp.send();
 
-}
+}	
 
-
-
-
-
-
-
-
-			function get_service(id)
-			{
-			var idd='c'+id;
-			var cat = document.getElementById(idd).value;
-			
-
-var xmlhttp = new XMLHttpRequest();
-
-xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-
-		myObj = JSON.parse(this.responseText);
-		//var services=myObj.ser.split(",");
+</script>
 		
-		//alert(myObj[0]['id']);
-
-		var sid='s'+id;
-		select = document.getElementById(sid);
-		document.getElementById(sid).options.length = 0;
-
-
-		var option = document.createElement("option");
-		option.value ="Select";
-		option.text= "Select";
-		select.appendChild(option);
-for(i=0;i<myObj.length;i++)
-{
-		var option = document.createElement("option");
-		option.value =myObj[i]['id'];
-		var price=myObj[i]['pri'];
-		option.text =myObj[i]['ser']+"    Rs:"+price;
-		select.appendChild(option);
-
-}
-
-}
-    };
-xmlhttp.open("GET", "get_service.php?id="+cat, true);
-xmlhttp.send();
-
-
-
-
-}
-
-
-
-
-function cal_price(id)
-	{
-		/*
-		var ss='s'+id;
-		x=document.getElementById(ss).value;
-		
-		p=price_array.split(",");
-		p=p[x-1];
-		//b=document.getElementById('price').value;
-		//alert(b);
-		ppp=ppp+Number(p);
-		document.getElementById('price').innerHTML=ppp;
-		*/
-	}
-	
-		</script>
-		
-
-
-
-
-
 		<style type="text/css">
-}
 img.wp-smiley,
 img.emoji {
 	display: inline !important;
@@ -238,6 +67,7 @@ img.emoji {
 	padding: 0 !important;
 }
 </style>
+
 <link rel='stylesheet' id='woocommerce-layout-css' href='../wp-content/plugins/woocommerce/assets/css/woocommerce-layout.css?ver=3.1.2' type='text/css' media='all'>
 <link rel='stylesheet' id='woocommerce-smallscreen-css' href='../wp-content/plugins/woocommerce/assets/css/woocommerce-smallscreen.css?ver=3.1.2' type='text/css' media='only screen and (max-width: 768px)'>
 <link rel='stylesheet' id='woocommerce-general-css' href='../wp-content/plugins/woocommerce/assets/css/woocommerce.css?ver=3.1.2' type='text/css' media='all'>
@@ -251,11 +81,6 @@ body, input, textarea, select, h2 em { font-family: 'Source Sans Pro', Arial, sa
 <link rel='stylesheet' id='redux-google-fonts-theme_options-css' href='http://fonts.googleapis.com/css?family=Source+Sans+Pro%3A200%2C300%2C400%2C600%2C700%2C900%2C200italic%2C300italic%2C400italic%2C600italic%2C700italic%2C900italic%7CMontserrat%3A100%2C200%2C300%2C400%2C500%2C600%2C700%2C800%2C900%2C100italic%2C200italic%2C300italic%2C400italic%2C500italic%2C600italic%2C700italic%2C800italic%2C900italic&#038;subset=latin&#038;ver=1484044305' type='text/css' media='all'>
 <script type='text/javascript' src='../wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
 <script type='text/javascript' src='../wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
-<script type='text/javascript'>
-/* <![CDATA[ */
-var wc_add_to_cart_params = {"ajax_url":"\/beautyspot\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/beautyspot\/typography\/?wc-ajax=%%endpoint%%","i18n_view_cart":"View cart","cart_url":"http:\/\/wpdemos.lsvr.sk\/beautyspot\/cart\/","is_cart":"","cart_redirect_after_add":"no"};
-/* ]]> */
-</script>
 <script type='text/javascript' src='../wp-content/plugins/woocommerce/assets/js/frontend/add-to-cart.min.js?ver=3.1.2'></script>
 <script type='text/javascript' src='../wp-content/plugins/js_composer/assets/js/vendors/woocommerce-add-to-cart.js?ver=5.0.1'></script>
 <script type='text/javascript' src='../wp-content/themes/beautyspot/library/js/modernizr.custom.min.js?ver=2.3.2'></script>
@@ -314,7 +139,6 @@ var wc_add_to_cart_params = {"ajax_url":"\/beautyspot\/wp-admin\/admin-ajax.php"
 				<!-- HEADER BRANDING : begin -->
 				<div class="header-branding">
 					<img src="../logo.png" width="291" alt="Hair Creation">
-					<!--<img src="wp-content/uploads/sites/2/2017/01/logo.png" data-hires="http://wpdemos.lsvr.sk/beautyspot/wp-content/uploads/sites/2/2017/01/logo.2x.png" width="291" alt="Hair Creation">-->
 				</div>
 				<!-- HEADER BRANDING : end -->
 
@@ -328,13 +152,14 @@ var wc_add_to_cart_params = {"ajax_url":"\/beautyspot\/wp-admin\/admin-ajax.php"
 								<span><a href="../index.php">Home</a></span>
 							</li>
 							<li id="menu-item-152" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="../services/">Services</a></span></li>
-							<li id="menu-item-153" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="../employee/">Employees</a></span></li>
+							<li id="menu-item-153" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-120 current_page_item"><span><a href="../employee/">Employees</a></span></li>
 							<li id="menu-item-153" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="../Attendance/">Employees Attendance</a></span></li>
 							<li id="menu-item-165" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="../salary/">Employee Salary</a></span></li>
 							
-							<li id="menu-item-165" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-120 current_page_item"><span><a href="index.php">Customer Status</a></span></li>
-								<li id="menu-item-165" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="../records/">Records</a></span></li>
-								<li id="menu-item-165" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="../stock/">Stock</a></span></li>
+							<li id="menu-item-165" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="../customer/">Customer Status</a></span></li>
+							<li id="menu-item-165" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="../records/">Records</a></span></li>
+							<li id="menu-item-165" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="../stock/">Stock</a></span></li>
+
 						</ul>
 					</nav>
 					<!-- HEADER MENU : end -->
@@ -366,7 +191,7 @@ var wc_add_to_cart_params = {"ajax_url":"\/beautyspot\/wp-admin\/admin-ajax.php"
 
 					<!-- HEADER RESERVATION : begin -->
 					<div class="header-reservation">
-						<a href="../logout.php" class="c-button">LOGOUT</a>
+					<a href="../logout.php" class="c-button">LOGOUT</a>
 					</div>
 					<!-- HEADER RESERVATION : end -->
 						
@@ -390,7 +215,7 @@ var wc_add_to_cart_params = {"ajax_url":"\/beautyspot\/wp-admin\/admin-ajax.php"
 								<li>
 									<div class="item-inner">
 										<i class="ico fa fa-map-marker"></i>
-										<p><strong></strong><br>Malviya Nagar,Jaipur<br>Ind 401015</p>
+										<p><strong>BEAUTYSPOT</strong><br>Malviya Nagar,Jaipur<br>Ind 401015</p>
 									</div>
 								</li>
 								
@@ -442,11 +267,7 @@ var wc_add_to_cart_params = {"ajax_url":"\/beautyspot\/wp-admin\/admin-ajax.php"
 	<!-- PAGE HEADER : begin -->
 	<div id="page-header">
 		<div class="container">
-			<h1 class="m-secondary-font">Clients</h1>
-			
-			<ul class="breadcrumbs">
-		<li><a href="">Home</a></li><li>Client</li>		</ul>
-	
+			<h1 class="m-secondary-font">Stock Record</h1>	
 		</div>
 	</div>
 	<!-- PAGE HEADER : begin -->
@@ -456,103 +277,44 @@ var wc_add_to_cart_params = {"ajax_url":"\/beautyspot\/wp-admin\/admin-ajax.php"
 		<!-- PAGE CONTENT : begin -->
 		<div id="page-content">
 			<div class="various-content">
-				
+			
 
 				<div >
-					<a href="#reservation-form" class="c-button">Book Appointment</a>
+					<h3>Select Date</h3>
+					
+		<input type="Date" id="dt" onchange="get_record(this.id)">
 				</div>
+
+
 
 <hr class="c-divider m-medium m-transparent">
 	<div class="wpb_text_column wpb_content_element ">
 		<div class="wpb_wrapper">
-			<h2>Clients</h2>
-<table>
+<table id="rec">
 <thead>
 <tr>
 <th>Name</th>
-<th>Mobile</th>
-<th>Therapy</th>
-<th>Therapist</th>
-<th>Start At</th>
-<th>End After</th>
-<th>Total</th>
-<th>Status</th>
+<th>Product</th>
+<th>Quantity</th>
 </tr>
 </thead>
 <tbody>
-<?php
-while($row00 = mysqli_fetch_assoc($result00)) {
-
+<div >
+<?php 
+$sql2 = "SELECT * FROM stock_record where edate=(SELECT MAX(edate) from stock_record)";
+$result2 = mysqli_query($conn, $sql2);
+while($row2 = mysqli_fetch_assoc($result2)) {
 ?>
-
 <tr>
-<td><?php echo $row00['ename'];?></td>
-<td><?php echo $row00['phone'];?></td>
-<?php 
-$tth=$row00['therapy'];
-$tth=explode(',', $tth);
-
-
-$eep=$row00['therapist'];
-$eep=explode(',', $eep);
-?>
-<td>
-	<?php 
-	foreach ($tth as $key) {
-		
-	?>
-	<div><?php echo $sdetail[$key]; ?></div>
-	<?php
-	}
-	?>
-</td>
-<td>
-		<?php 
-	foreach ($eep as $key) {
-		
-	?>
-	<div><?php echo $key;?></div>
-	<?php
-	}
-	?>
-</td>
-<td>
-
-	<?php echo $row00['start'];
-	?>
-	
-</td>
-<td>
-	<?php
-	$tt=0;
-foreach ($tth as $key) {
-	$tt += $sduration[$key];
-}
-echo $tt;
-	?>
-	min
-</td>
-<td>
-<?php 
-$tot=0;
-foreach ($tth as $key) {
- $tot+=$sprice[$key];
-}
-echo $tot;
-?>
-</td>
-<td><a href=javascript:test(<?php echo $row00['id']; ?>) class="remove" data-product_sku="">×</a></td>
+<td><?php echo $row2['ename'];?></td>
+<td><?php echo $row2['pname'];?></td>
+<td><?php echo $row2['quant'];?></td>
 </tr>
 <?php } ?>
+</div>
 </tbody>
 </table>
-<script type="text/javascript">
-	function test(id)
-	{
-		x=prompt("Discount ?? Percentage");
-		location.href="invoice.php?id="+id+"&d="+x;
-	}
-</script>
+
 		</div>
 	</div>
 </div></div></div></div>
@@ -565,7 +327,8 @@ echo $tot;
 </div>
 <!-- CORE : end -->
 
-                       
+                        
+						
         
 			</div>
 		</div>
@@ -588,7 +351,6 @@ echo $tot;
 <nav class="footer-menu">
 
     <ul id="menu-footer-items" class="footer-menu menu-items"><li id="menu-item-149" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-149"><a href="../index.htm"><span>Home</span></a></li>
-
 </ul>
 </nav>
 <!-- FOOTER MENU : end -->
@@ -611,73 +373,6 @@ echo $tot;
 <!-- RESERVATION FORM : end -->
 
 
-
-<!-- RESERVATION FORM : begin -->
-<div id="reservation-form" class="c-modal" style="display: none;">
-	<div class="modal-loading"><span class="c-loading-anim"><span></span></span></div>
-	<div class="modal-box" style="display: none;">
-		<button class="modal-close" type="button"><i class="fa fa-times"></i></button>
-		<div class="modal-box-inner various-content"><div role="form" class="wpcf7" id="wpcf7-f134-o1" lang="en-US" dir="ltr">
-<div class="screen-reader-response"></div>
-<form action="add_appointment.php" method="post" id="add_therapy" class="wpcf7-form" >
-
-<h2>New Appointment</h2>
-<p>Fill Details Of New Client</p>
-<div class="form-field">
-<h3>Number Of Therapy Client Wants</h3>
-
-
-
-
-<select id="_num_service" onchange="num_service()">
-	<option value="0">0</option>
-  <option value="1">1</option>
-  <option value="2">2</option>
-  <option value="3">3</option>
-  <option value="4">4</option>
-</select>
-<div id="_service">
-
-</div>
-
-
-
-<div class="form-field">
-
-</div>
-
-
-<div class="form-field">
-
-
-<hr class="c-divider">
-<div class="wpcf7-response-output wpcf7-display-none"></div>
-<div class="row">
-<div class="col-sm-6">
-<div class="form-field"><label for="res-your-name">Your Name <span>*</span></label><span class="wpcf7-form-control-wrap res-your-name"><input type="text" name="name" required value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required" id="res-your-name" aria-required="true" aria-invalid="false"></span></div>
-<div class="form-field"><label for="res-your-email">Your Email Address</label><span class="wpcf7-form-control-wrap res-your-email"><input type="email" name="mail" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-email wpcf7-validates-as-email" id="res-your-email" aria-invalid="false"></span></div>
-<div class="form-field"><label for="res-your-phone">Your Phone Number</label><span class="wpcf7-form-control-wrap res-your-phone"><input required type="number" name="phone" size="40" class="wpcf7-form-control wpcf7-text wpcf7-tel wpcf7-validates-as-tel" id="res-your-phone" aria-invalid="false"></span></div>
-</div>
-<div class="col-sm-6">
-<span><b>Select Time</b></span>
-<input type="time" name="time">
-</div>
-<div class="col-sm-6">
-<span><b>Gender</b></span>
-<select name="gen" value="gen">
-	<option value="male">Male</option>
-	<option value="female">Female</option>
-</select>
-</div>
-<div class="col-sm-6">
-
-<div class="form-field"><label for="res-reservation-note">Address</label><span class="wpcf7-form-control-wrap res-reservation-note"><textarea name="address" cols="40" rows="10" class="wpcf7-form-control wpcf7-textarea" id="res-reservation-note" aria-invalid="false"></textarea></span></div>
-<div class="form-field"><input type="button" onclick="submit_by_id()" value="Make Appointment" class="wpcf7-form-control wpcf7-submit c-button"></div>
-</div>
-</div>
-</form></div></div>
-	</div>
-</div>
 <!-- RESERVATION FORM : end -->
 
 

@@ -19,7 +19,7 @@ location.href='../home.html'</script>";
 
 
 	<link rel="shortcut icon" href="../wp-content/uploads/sites/2/2017/01/favicon.png">
-    <title>Services</title>
+    <title>Stock</title>
 <link rel='dns-prefetch' href='//fonts.googleapis.com'>
 <link rel='dns-prefetch' href='//s.w.org'>
 		<script type="text/javascript">
@@ -244,6 +244,26 @@ var wc_add_to_cart_params = {"ajax_url":"\/beautyspot\/wp-admin\/admin-ajax.php"
 
 		</div>
 	</div>
+	<script>
+    function submitForm(action,id,cat,nam)
+    {
+    	//alert(action);
+    	x=document.getElementById('num'+id).value;
+    
+    		nm=prompt("Enter Name of User");
+    	
+    	location.href=action+"?id="+id+"&num="+x+"&cat="+cat+"&nm="+nm+"&nam="+nam;
+        //ocument.getElementById(id).action = action;
+        //document.getElementById(id).submit();
+    }
+        function submitForm1(action,id)
+    {
+    	//alert(action);
+    	
+        document.getElementById(id).action = action;
+        document.getElementById(id).submit();
+    }
+</script>
 </header>
 <!-- HEADER : end -->
 
@@ -257,10 +277,10 @@ var wc_add_to_cart_params = {"ajax_url":"\/beautyspot\/wp-admin\/admin-ajax.php"
 	<!-- PAGE HEADER : begin -->
 	<div id="page-header">
 		<div class="container">
-			<h1 class="m-secondary-font">Services</h1>
+			<h1 class="m-secondary-font">Stock Management</h1>
 
 			<ul class="breadcrumbs">
-		<li><a href="">Home</a></li><li>Services</li>		</ul>
+		<li><a href="">Home</a></li><li>Stock</li>		</ul>
 
 		</div>
 	</div>
@@ -271,48 +291,35 @@ var wc_add_to_cart_params = {"ajax_url":"\/beautyspot\/wp-admin\/admin-ajax.php"
 		<!-- PAGE CONTENT : begin -->
 		<div id="page-content">
 			<div class="various-content">
+				<div >
+					<a href="#reservation-form" class="c-button">Add New Product</a>
+					<a href="stock_record.php" class="c-button">Show Record</a>
+				</div>
+				<!--
 				<div class="vc_row wpb_row vc_row-fluid">
 					<div class="wpb_column vc_column_container vc_col-sm-12">
 						<div class="vc_column-inner ">
 							<div class="wpb_wrapper">
-							
-								<div class="wpb_text_column wpb_content_element ">
-									<div class="wpb_wrapper">
-										<h2 id="cosmetics">Services Customization</h2>
-									</div>
-								</div>
+
 								<div class="vc_row wpb_row vc_inner vc_row-fluid">
 									<div class="wpb_column vc_column_container vc_col-sm-2">
 										<div class="vc_column-inner "><div class="wpb_wrapper">
 											<div class="c-image">
-												<div style="max-width: 200px;">
-													<h1><a href="#reservation-form" class="c-button m-color-1 default" style="padding:0% 25%;font-size:3em">+</a></h1>
-												</div>
+												
+												<a href="#reservation-form" class="c-button m-color-1 default" style="padding:0% 25%;">Add New</a>
+												
 											</div>
 										</div>
 									</div>
 								</div>
-								<div class="wpb_column vc_column_container vc_col-sm-10">
-									<div class="vc_column-inner ">
-										<div class="wpb_wrapper">
-											<ul class="c-accordion ">
-												<li>
-													<h3 class="accordion-title m-has-price">Add new Services</h3><p class="accordion-price"><s> </s> </p>
-													<div class="accordion-content">
-														<p>Add new services to increase Popularity of your Salon.</p>
-													</div>
-												</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-								</div>
+
+								</div> -->
 
 
 
 
 <?php
-									$sql = "SELECT DISTINCT service_cat FROM services";
+									$sql = "SELECT DISTINCT category FROM stock";
 									$result = mysqli_query($conn, $sql);
 									if (mysqli_num_rows($result) > 0) {
 									    // output data of each row
@@ -326,7 +333,7 @@ var wc_add_to_cart_params = {"ajax_url":"\/beautyspot\/wp-admin\/admin-ajax.php"
 
 								<div class="wpb_text_column wpb_content_element ">
 									<div class="wpb_wrapper">
-										<h2 id="cosmetics"><?php echo $row['service_cat']; ?></h2>
+										<h2 id="cosmetics"><?php echo $row['category']; ?></h2>
 									</div>
 								</div>
 								<div class="vc_row wpb_row vc_inner vc_row-fluid">
@@ -336,7 +343,7 @@ var wc_add_to_cart_params = {"ajax_url":"\/beautyspot\/wp-admin\/admin-ajax.php"
 												<ul class="c-accordion ">
 <?php 
 
-									$sql1 = "SELECT * FROM services where service_cat='".$row['service_cat']."'";
+									$sql1 = "SELECT * FROM stock where category='".$row['category']."'";
 									$result1 = mysqli_query($conn, $sql1);
 									#echo $sql1;
 									if (mysqli_num_rows($result1) > 0) {
@@ -346,21 +353,21 @@ var wc_add_to_cart_params = {"ajax_url":"\/beautyspot\/wp-admin\/admin-ajax.php"
 ?>
 
 							<li>
-							<h3 class="accordion-title m-has-price"><?php echo $row1['service_name']; ?>
+							<h3 class="accordion-title m-has-price"><?php echo $row1['name']; ?>
 											
-												</h3><p class="accordion-price">₹ <?php echo $row1['price']; ?></p>
-														<div class="accordion-content">														
+												</h3><p class="accordion-price"> <?php echo $row1['quant']; ?></p>
+														<div class="accordion-content">									
+
+		
 						 <div class="form-fields">
-						 	<form method="post" id="fom" action="update_therapy.php">
-						 	<input type="hidden" name="id" value='<?php echo $row1['id'];?>' />
-                            <input  type="text" name="price" value="<?php echo $row1['price'];?>" data-placeholder="New Price">
-                 <input type="text" name="therapy" value='<?php echo $row1['service_name'];?>' data-placeholder="New Name">
-                            <button class="c-button submit-btn" type="submit">Update</button>
-                            </form>
-                            <form id="fom" method="post" action="delete_therapy.php">
-                            <input type="hidden" name="id" value='<?php echo $row1['id'];?>' />
-                            <button type="submit" class="c-button submit-btn">Delete</button>
-                        </form>
+						 	
+	 	<input type="hidden" name="id" value='<?php echo $row1['id'];?>' />
+        <input  type="text" id="num<?php echo $row1['id'];?>" name="num" data-placeholder="Numbers">
+        <button class="c-button submit-btn" onclick="submitForm('increase.php','<?php echo $row1['id'];?>','<?php echo $row['category']; ?>','<?php echo $row1['name']; ?>')" type="submit">Increase</button>
+         <button class="c-button submit-btn" onclick="submitForm('decrease.php','<?php echo $row1['id'];?>','<?php echo $row['category']; ?>','<?php echo $row1['name']; ?>')" type="submit">Decrease</button>
+         <button class="c-button submit-btn" onclick="submitForm('delete.php','<?php echo $row1['id'];?>','<?php echo $row['category']; ?>','<?php echo $row1['name']; ?>')" type="submit">Delete</button>
+					
+                        
                         </div>
 						
 														</div>
@@ -442,158 +449,44 @@ var wc_add_to_cart_params = {"ajax_url":"\/beautyspot\/wp-admin\/admin-ajax.php"
 	<div class="modal-box-inner various-content">
 		<div role="form" class="wpcf7" id="wpcf7-f134-o1" lang="en-US" dir="ltr">
 			<div class="screen-reader-response"></div>
-				<form action="add_therapy.php" id="add_therapy" method="post" class="wpcf7-form">
-					<h2>Add Therapy</h2>
+				<form action="add_product.php" id="add_therapy" method="post" class="wpcf7-form">
+					<h2>Add Product</h2>
 					<hr class="c-divider">
 					<div class="wpcf7-response-output wpcf7-display-none"></div>
 					<div class="row">
 						<div class="col-sm-6">
 							<div class="form-field">
-								<label for="res-your-email">Therapy Category</label>
+								<label for="res-your-email">Product Category</label>
 								<span class="wpcf7-form-control-wrap res-your-email">
-									<select name="cat_name" id="cat_name" onchange="sub_cat(this.id)">
-									<option value="Choose">Choose</option>
-									<?php 
-									$sql = "SELECT DISTINCT master_cat FROM services";
-									$result = mysqli_query($conn, $sql);
-									
-									if (mysqli_num_rows($result) > 0) {
-									    while($row2 = mysqli_fetch_assoc($result)) {
-									        #echo "id: " . $row['cat_name']."<br>";
-									        echo "<option value='".$row2['master_cat']."'>".$row2['master_cat']."</option>";
-									    }
-									}
-
-									mysqli_close($conn);
-									?>
+									<select name="cat_name" id="cat_name">
+									<option value="Sale">Sale</option>
+									<option value="Use">Use</option>
 									</select>
 							
 								</span>
 							</div>
-
-
-
-<script type="text/javascript">
-	function sub_cat(id)
-	{
-		//alert(id);
-		var mc=document.getElementById(id).value;
-
-		var xmlhttp = new XMLHttpRequest();
-
-		xmlhttp.onreadystatechange = function() {
-    
-    if (this.readyState == 4 && this.status == 200) {
-
-		myObj = JSON.parse(this.responseText);
-		data=myObj.data;
-
-		//alert(data);
-
-		select = document.getElementById('sub_name');
-		document.getElementById('sub_name').options.length = 0;
-
-
-for(i=0;i<data.length;i++)
-{
-		var option = document.createElement("option");
-		option.value =data[i];
-		option.text =data[i];
-		select.appendChild(option);
-
-}
-
-
-    }
-    };
-
-xmlhttp.open("GET", "get_subcat.php?id="+mc, true);
-xmlhttp.send();
-	}
-
-/*
-function get_service(id)
-{
-var mc=document.getElementById(id).value;
-
-		var xmlhttp = new XMLHttpRequest();
-
-		xmlhttp.onreadystatechange = function() {
-    
-    if (this.readyState == 4 && this.status == 200) {
-
-		myObj = JSON.parse(this.responseText);
-		data=myObj.data;
-
-		alert(data);
-/*
-		select = document.getElementById('sub_name');
-		document.getElementById('sub_name').options.length = 0;
-
-
-for(i=0;i<data.length;i++)
-{
-		var option = document.createElement("option");
-		option.value =data[i];
-		option.text =data[i];
-		select.appendChild(option);
-
-}
-
-
-    }
-    };
-
-xmlhttp.open("GET", "get_ser.php?id="+mc, true);
-xmlhttp.send();
-
-
-}
-*/
-
-</script>
-
-
-
-							<div class="form-field">
-								<label for="res-your-email">Sub Category</label>
-								<span class="wpcf7-form-control-wrap res-your-email">
-									<select name="sub_name" id="sub_name">
-									</select>
-							
-								</span>
-							</div>
-
-
-
-
+</br>
 							 
 							<div class="form-field">
-								<label for="res-your-email">Therapy Name</label>
+								<label for="res-your-email">Product Name</label>
 								<span class="wpcf7-form-control-wrap res-your-email">
-									<input type="text" class="wpcf7-form-control wpcf7-text" name="therapy" aria-invalid="false">
+									<input type="text" class="wpcf7-form-control wpcf7-text" name="pname" aria-invalid="false">
 								</span>
 							</div>
-
-
-							<div class="form-field">
-								<label for="res-your-email">Therapy Duration(In Minutes)</label>
-								<span class="wpcf7-form-control-wrap res-your-email">
-									<input type="text" class="wpcf7-form-control wpcf7-text" name="duration" aria-invalid="false">
-								</span>
-							</div>
+</br>
 
 							<div class="form-field">
-								<label for="res-your-email">Price</label>
+								<label for="res-your-email">Quantity</label>
 								<span class="wpcf7-form-control-wrap res-your-email">
-									<input type="text" class="wpcf7-form-control wpcf7-text" name="price" aria-invalid="false">
+									<input type="text" class="wpcf7-form-control wpcf7-text" name="quantity" aria-invalid="false">
 								</span>
 							</div>
 
 						</div>
 					</div>
 		</div>
-		<div class="form-field"><input type="button" onclick="submit_by_id()" value="Add" class="wpcf7-form-control wpcf7-submit c-button"></div>
+		</br>
+		<button class="c-button submit-btn" onclick="submitForm1('add_product.php','add_therapy')" type="submit">Add</button>
 	</div>
 	</div>
 </form>

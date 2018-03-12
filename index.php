@@ -132,8 +132,11 @@ location.href='home.html'</script>";
 							<li id="menu-item-152" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="services/">Services</a></span></li>
 							<li id="menu-item-153" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="employee/">Employees</a></span></li>
 							<li id="menu-item-153" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="attendance/">Employees Attendance</a></span></li>
+							<li id="menu-item-165" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="salary/">Employee Salary</a></span></li>
+
 							<li id="menu-item-165" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="customer/">Customer Status</a></span></li>
 							<li id="menu-item-165" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="records/">Records</a></span></li>
+							<li id="menu-item-165" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="stock/">Stock</a></span></li>
 						</ul>
 					</nav>
 					<!-- HEADER MENU : end -->

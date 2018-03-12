@@ -1,14 +1,12 @@
 <?php
 include('../database/connection.php');
 
-$dt= $_GET['dt'];
-$tm= $_GET['tm'];
 $id= $_GET['id'];
-$st= $_GET['st'];
+$sal= $_GET['sal'];
 
-echo $dt;
+#echo $dt;
 
-$query="insert into attendance(ename,dt,intime,status) values ('$id','$dt','$tm','$st')";
+$query="update employee set rsalary='$sal' where id='$id'";
 #$result = mysqli_query($conn, $query);
 
 if (!mysqli_query($conn,$query))

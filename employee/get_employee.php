@@ -33,6 +33,7 @@ $myObj->name=$row1['ename'];
 $myObj->email=$row1['email'];
 $myObj->phone=$row1['phone'];
 $myObj->address=$row1['address'];
+$myObj->salary=$row1['salary'];
 $myObj->image="upload/".$row1['image'];
 $myObj->ser=$final;
 }

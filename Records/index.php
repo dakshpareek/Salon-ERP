@@ -6,12 +6,13 @@ echo "<script>
 alert('You Are Not Authorised');
 location.href='../home.html'</script>";
 }
-$sdetail=array();
+#$sdetail=array();
 $sql11 = "SELECT * from services";
 $result11 = mysqli_query($conn, $sql11);
 while($row11 = mysqli_fetch_assoc($result11)) {
  		$dm1=$row11['service_name'];
- 		array_push($sdetail, $dm1);
+ 		$sdetail[$row11['id']]=$dm1;
+ 		#array_push($sdetail, $dm1);
 	 }
 
 ?>
@@ -42,10 +43,11 @@ xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
 
 		myObj = this.responseText;
-		var x = document.getElementById("rec").rows.length;
-		for(i=1;i<x;i++)
+var table = document.getElementById("rec");
+
+		for(var i = table.rows.length - 1; i > 0; i--)
 		{
-		document.getElementById('rec').deleteRow(i);
+    		table.deleteRow(i);
 		}
 		document.getElementById('rec').innerHTML += myObj;
 		//document.getElementById('rec').innerHTML=myObj;
@@ -160,8 +162,11 @@ body, input, textarea, select, h2 em { font-family: 'Source Sans Pro', Arial, sa
 							<li id="menu-item-152" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="../services/">Services</a></span></li>
 							<li id="menu-item-153" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-120 current_page_item"><span><a href="../employee/">Employees</a></span></li>
 							<li id="menu-item-153" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="../Attendance/">Employees Attendance</a></span></li>
+							<li id="menu-item-165" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="../salary/">Employee Salary</a></span></li>
+							
 							<li id="menu-item-165" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="../customer/">Customer Status</a></span></li>
 							<li id="menu-item-165" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="../records/">Records</a></span></li>
+							<li id="menu-item-165" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="../stock/">Stock</a></span></li>
 
 						</ul>
 					</nav>
@@ -317,7 +322,7 @@ while($row2 = mysqli_fetch_assoc($result2)) {
 $tth=$row2['therapy'];
 $tth=explode(',', $tth);
 foreach ($tth as $key) {
-echo $sdetail[$key-1].",";
+echo $sdetail[$key].",";
 }
 ?></td>
 <td><?php echo $row2['price'];?></td>

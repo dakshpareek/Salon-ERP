@@ -6,7 +6,7 @@ echo "<script>
 alert('You Are Not Authorised');
 location.href='../home.html'</script>";
 }
-									$sql0 = "SELECT id,ename,TIME_FORMAT(intime, '%h:%i %p') intime ,TIME_FORMAT(outtime, '%h:%i %p')outtime FROM Attendance where dt=CURDATE()";
+									$sql0 = "SELECT id,status,ename,TIME_FORMAT(intime, '%h:%i %p') intime ,TIME_FORMAT(outtime, '%h:%i %p')outtime FROM Attendance where dt=CURDATE()";
 									$result0 = mysqli_query($conn, $sql0);
 								
 
@@ -137,8 +137,11 @@ var wc_add_to_cart_params = {"ajax_url":"\/beautyspot\/wp-admin\/admin-ajax.php"
 							<li id="menu-item-152" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="../services/">Services</a></span></li>
 							<li id="menu-item-153" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="../employee/">Employees</a></span></li>
 							<li id="menu-item-153" class="menu-item menu-item-type-post_type menu-item-object-page current_page_item"><span><a href="index.php">Employees Attendance</a></span></li>
+							<li id="menu-item-165" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="../salary/">Employee Salary</a></span></li>
+							
 							<li id="menu-item-165" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="../customer/">Customer Status</a></span></li>
 								<li id="menu-item-165" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="../records/">Records</a></span></li>
+								<li id="menu-item-165" class="menu-item menu-item-type-post_type menu-item-object-page"><span><a href="../stock/">Stock</a></span></li>
 						</ul>
 					</nav>
 					<!-- HEADER MENU : end -->
@@ -276,8 +279,10 @@ var wc_add_to_cart_params = {"ajax_url":"\/beautyspot\/wp-admin\/admin-ajax.php"
 <tr>
 <th>Name</th>
 <th>Time In</th>
+<th>Status</th>
 <th>Time Out</th>
 <th>Close</th>
+
 </tr>
 </thead>
 <tbody>
@@ -285,8 +290,19 @@ var wc_add_to_cart_params = {"ajax_url":"\/beautyspot\/wp-admin\/admin-ajax.php"
 	while($row0 = mysqli_fetch_assoc($result0)) { ?>
 <tr>
 <td><?php echo $row0['ename']; ?></td>
-<td><?php echo $row0['intime']; ?></td>
-<td><?php if ($row0['outtime']==null)
+<td><?php
+if ($row0['status']!='Leave')
+{
+	echo $row0['intime']; 
+}
+else
+{
+	echo '-- --';
+}
+?>
+</td>
+<td><?php echo $row0['status']; ?></td>
+<td><?php if ($row0['outtime']==null and $row0['status']!='Leave')
 {
 	echo "Present";
 	?>
@@ -411,6 +427,7 @@ xmlhttp.send();
 <h2>Take Attendance</h2>
 <div class="form-field">
 <h5 class="form-field-title">Select Therapist</h5>
+
 <select name="emp" id="emp">
 	<option value="Select">Select</option>
 					<?php 
@@ -434,7 +451,18 @@ xmlhttp.send();
 </div>
 <div class="row">
 <div class="col-sm-6">
-<img id="blah" src="#" alt=""/>
+<h5 class="form-field-title">Time</h5>
+<input id="time" value="08:00" name="time" type="time">
+</div>
+<div class="row">
+<div class="col-sm-6">
+<h5 class="form-field-title">Status</h5>
+<select name="status" id="status">
+	<option value="Working">Working</option>
+	<option value="Leave">Leave</option>
+	<option value="Outdoor">Outdoor</option>
+</select>
+</div>
 </div>
 </div>
 <div class="form-field"><input type="button" onclick="get_image('emp')" value="Done" class="wpcf7-form-control wpcf7-submit c-button"></div>
@@ -449,12 +477,16 @@ xmlhttp.send();
 	function get_image(id)
 	{
 final=document.getElementById(id).value;
+status=document.getElementById('status').value;
+
+tym=document.getElementById('time').value;
 
 var currentdate = new Date(); 
 var dt=currentdate.getFullYear() +"-"+(currentdate.getMonth()+1)+"-"+currentdate.getDate();
 var tm=currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
+/*
 //alert(currentdate);
-
+*/
 var xmlhttp = new XMLHttpRequest();
 
 	xmlhttp.onreadystatechange = function() {
@@ -466,7 +498,7 @@ var xmlhttp = new XMLHttpRequest();
     }
     };
 
-xmlhttp.open("GET", "take_attendance.php?id="+final+"&dt="+dt+"&tm="+tm, true);
+xmlhttp.open("GET", "take_attendance.php?id="+final+"&dt="+dt+"&tm="+tym+"&st="+status, true);
 xmlhttp.send();
 
 }
